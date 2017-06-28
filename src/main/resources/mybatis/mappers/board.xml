@@ -13,9 +13,7 @@
   	  FROM tbl_board
   </select>
   
-  <select id="selectList"
-  	parameterType="com.hanbit.board.vo.PageVO"
-  	resultType="com.hanbit.board.vo.BoardVO">
+  <select id="selectList" parameterType="pageVO" resultType="boardVO">
   	SELECT b.no, title, b.writer, views, COUNT(rno) reply_count
 	  FROM (
 		SELECT no, title, writer, views
@@ -32,15 +30,14 @@
   	  FROM tbl_board
   </select>
   
-  <insert id="insertArticle" parameterType="com.hanbit.board.vo.BoardVO">
+  <insert id="insertArticle" parameterType="boardVO">
   	INSERT INTO tbl_board
   		(no, title, writer, views, contents)
   	VALUES
   		(#{no}, #{title}, #{writer}, 0, #{contents})
   </insert>
   
-  <select id="selectArticle" parameterType="int"
-  	resultType="com.hanbit.board.vo.BoardVO">
+  <select id="selectArticle" parameterType="int" resultType="boardVO">
 	SELECT no, title, writer, views, contents
 	  FROM tbl_board
 	 WHERE no = #{no}
@@ -52,7 +49,7 @@
   	 WHERE no = #{no}
   </update>
   
-  <update id="updateArticle" parameterType="com.hanbit.board.vo.BoardVO">
+  <update id="updateArticle" parameterType="boardVO">
 	UPDATE tbl_board
 	   SET title = #{title},
 	   	   writer = #{writer},

@@ -10,15 +10,14 @@
   	 WHERE no = #{no}
   </select>
   
-  <insert id="insertReply" parameterType="com.hanbit.board.vo.ReplyVO">
+  <insert id="insertReply" parameterType="replyVO">
   	INSERT INTO tbl_reply
   		(rno, no, writer, contents)
   	VALUES
   		(#{rno}, #{no}, #{writer}, #{contents})
   </insert>
   
-  <select id="selectReplies" parameterType="int"
-  	resultType="com.hanbit.board.vo.ReplyVO">
+  <select id="selectReplies" parameterType="int" resultType="replyVO">
 	SELECT rno, writer, contents
 	  FROM tbl_reply
 	 WHERE no = #{no}
@@ -31,7 +30,7 @@
   	 WHERE no = #{no}
   </delete>
   
-  <delete id="deleteReply" parameterType="com.hanbit.board.vo.ReplyVO">
+  <delete id="deleteReply" parameterType="replyVO">
   	DELETE
   	  FROM tbl_reply
   	 WHERE no = #{no}
