@@ -9,6 +9,25 @@ $(function() {
 		else {
 			history.pushState({}, null, '#' + section);
 		}
+		
+		if (section === 'list') {
+			requestList();
+		}
+		else if (section === 'edit') {
+			
+		}
+		else if (section === 'detail') {
+			
+		}		
+	}
+	
+	function requestList() {
+		$.ajax({
+			url: '/list',
+			success: function(result) {
+				setList(result);
+			}
+		});
 	}
 	
 	function setList(rows) {

@@ -26,6 +26,10 @@ public class BoardDAO {
 		return sqlSession.selectList("board.selectList", pageVO);
 	}
 	
+	public int countTotal() {
+		return sqlSession.selectOne("board.countTotal");
+	}
+	
 }
 
 

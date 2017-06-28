@@ -17,5 +17,18 @@ public class BoardService {
 	public List<BoardVO> getList(int page) {
 		return boardDAO.selectList(page);
 	}
+
+	public int getTotalCount() {
+		return boardDAO.countTotal();
+	}
 	
 }
+
+
+
+
+
+
+
+
+

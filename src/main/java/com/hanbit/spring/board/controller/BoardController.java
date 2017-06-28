@@ -1,7 +1,9 @@
 package com.hanbit.spring.board.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,6 +32,17 @@ public class BoardController {
 	public List<BoardVO> list(
 			@RequestParam(value="page", defaultValue="1") int page) {
 		return boardService.getList(page);
+	}
+	
+	@RequestMapping("/total")
+	@ResponseBody
+	public Map total() {
+		int totalCount = boardService.getTotalCount();
+		
+		Map result = new HashMap();
+		result.put("total", totalCount);
+		
+		return result;
 	}
 	
 }
