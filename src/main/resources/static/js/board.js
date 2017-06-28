@@ -1,9 +1,14 @@
 $(function() {
-	function changeSection(section) {
+	function changeSection(section, init) {
 		$('.board-section').hide();
 		$('.board-' + section).show();
 		
-		history.pushState({}, null, '#' + section);
+		if (init) {
+			history.replaceState({}, null, '#' + section);
+		}
+		else {
+			history.pushState({}, null, '#' + section);
+		}
 	}
 	
 	function setList(rows) {
@@ -35,7 +40,7 @@ $(function() {
 		changeSection(link);
 	});
 	
-	changeSection('list');
+	changeSection('list', true);
 });
 
 
