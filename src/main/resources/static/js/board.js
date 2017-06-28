@@ -3,7 +3,7 @@ $(function() {
 	var rowsPerPage = 5;
 	var pagesToShow = 2;
 	
-	function changeSection(section, init) {
+	function changeSection(section, init, data) {
 		$('.board-section').hide();
 		$('.board-' + section).show();
 		
@@ -15,21 +15,53 @@ $(function() {
 		}
 		
 		if (section === 'list') {
-			requestList();
+			requestList(currentPage);
 		}
 		else if (section === 'edit') {
 			
 		}
 		else if (section === 'detail') {
+			var no = data;
 			
+			requestDetail(no);
 		}		
 	}
 	
-	function requestList() {
+	function requestDetail(no) {
+		$.ajax({
+			url: '/detail',
+			data: {
+				no: no
+			},
+			success: function(result) {
+				setDetail(result);
+			}
+		});
+	}
+	
+	function setDetail(article) {
+		var title = article.title;
+		var writer = article.writer;
+		var contents = article.contents;
+		
+		contents = contents.replace(/\\n/g, '<br>');
+		
+		$('#detail-title').html(title);
+		$('#detail-writer').html(writer);
+		$('#detail-contents').html(contents);
+	}
+	
+	function requestList(page) {
 		$.ajax({
 			url: '/list',
+			data: {
+				page: page
+			},
 			success: function(result) {
-				setList(result);
+				currentPage = page;
+				$('#board-list > tbody').fadeOut(200, function() {
+					setList(result);
+				});
 			}
 		});
 	}
@@ -40,7 +72,7 @@ $(function() {
 		for (var i=0; i<rows.length; i++) {
 			var row = rows[i];
 			
-			var rowHtml = '<tr>';
+			var rowHtml = '<tr no="' + row.no + '">';
 			rowHtml += '<td>' + row.no + '</td>';
 			rowHtml += '<td>' + row.title + '</td>';
 			rowHtml += '<td>' + row.writer + '</td>';
@@ -50,7 +82,18 @@ $(function() {
 			$('#board-list > tbody').append(rowHtml);
 		}
 		
+		$('#board-list > tbody').fadeIn(200);
+		
+		handleRowEvent();
 		requestPaging();
+	}
+	
+	function handleRowEvent() {
+		$('#board-list tbody tr').on('click', function() {
+			var no = $(this).attr('no');
+			
+			changeSection('detail', false, no);
+		});
 	}
 	
 	function requestPaging() {
@@ -70,7 +113,7 @@ $(function() {
 			+ (total % rowsPerPage === 0 ? 0 : 1);
 		var firstPage = 1;
 		var lastPage = totalPages;
-		var startPage = ((currentPage - 1) / pagesToShow)
+		var startPage = parseInt((currentPage - 1) / pagesToShow)
 			* pagesToShow + 1;
 		var endPage = Math.min(startPage + pagesToShow - 1, lastPage);
 		var prevPage = startPage - 1;
@@ -79,7 +122,13 @@ $(function() {
 		$('.board-list .pagination').empty();
 		
 		var pagingHtml = '';
-		pagingHtml += '<li>';
+		pagingHtml += '<li';
+		
+		if (prevPage < firstPage) {
+			pagingHtml += ' class="disabled"';
+		}
+		
+		pagingHtml += '>';
 		pagingHtml += '<a class="board-page"';
 		pagingHtml += ' page="' + prevPage + '"';
 		pagingHtml += ' href="#" aria-label="Previous">';
@@ -99,7 +148,13 @@ $(function() {
 			pagingHtml += ' href="#">' + i + '</a></li>';
 		}
 		
-		pagingHtml += '<li>';
+		pagingHtml += '<li';
+		
+		if (nextPage > lastPage) {
+			pagingHtml += ' class="disabled"';
+		}
+		
+		pagingHtml += '>';
 		pagingHtml += '<a class="board-page"';
 		pagingHtml += ' page="' + nextPage + '"';
 		pagingHtml += ' href="#" aria-label="Next">';
@@ -116,7 +171,13 @@ $(function() {
 		$('.board-page').on('click', function(event) {
 			event.preventDefault();
 			
-			var page = $(this).attr('page');
+			if ($(this).parent('li').hasClass('disabled')) {
+				return;
+			}
+			
+			var page = parseInt($(this).attr('page'));
+			
+			requestList(page);
 		});
 	}
 	

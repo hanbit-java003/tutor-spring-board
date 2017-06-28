@@ -22,6 +22,10 @@ public class BoardService {
 		return boardDAO.countTotal();
 	}
 	
+	public BoardVO getArticle(int no) {
+		return boardDAO.selectArticle(no);
+	}
+	
 }
 
 

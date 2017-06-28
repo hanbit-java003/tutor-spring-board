@@ -45,6 +45,12 @@ public class BoardController {
 		return result;
 	}
 	
+	@RequestMapping("/detail")
+	@ResponseBody
+	public BoardVO detail(@RequestParam("no") int no) {
+		return boardService.getArticle(no);
+	}
+	
 }
 
 

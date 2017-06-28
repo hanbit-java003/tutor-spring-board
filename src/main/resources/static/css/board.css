@@ -10,6 +10,37 @@
 	text-align: right;
 }
 
+#board-list tbody tr {
+	cursor: pointer;
+}
+
 .paging-box {
 	text-align: center;
 }
+
+.board-text {
+	border-bottom: solid 1px #999;
+}
+
+.board-contents {
+	min-height: 200px;
+	border-top: solid 1px #999;
+	border-bottom: solid 1px #999;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

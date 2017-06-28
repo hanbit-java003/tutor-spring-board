@@ -30,6 +30,10 @@ public class BoardDAO {
 		return sqlSession.selectOne("board.countTotal");
 	}
 	
+	public BoardVO selectArticle(int no) {
+		return sqlSession.selectOne("board.selectArticle", no);
+	}
+	
 }
 
 
