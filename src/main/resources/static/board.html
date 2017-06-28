@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>스프링 게시판</title>
+	<link rel="stylesheet" href="//unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="./css/board.css">
+</head>
+<body>
+<div class="board-container">
+	<!-- 목록 -->
+	<div class="board-list board-section">
+		목록
+		<div class="board-buttons">
+			<button class="board-link" link="edit">글쓰기</button>
+		</div>
+	</div>
+	<!-- 글쓰기 -->
+	<div class="board-edit board-section">
+		수정
+		<div class="board-buttons">
+			<button class="board-link" link="list">목록</button>
+		</div>
+	</div>
+	<!-- 상세 -->
+	<div class="board-detail board-section">
+		상세
+	</div>
+</div>
+
+<script src="//unpkg.com/jquery@3.2.1"></script>
+<script src="//unpkg.com/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+<script src="./js/board.js"></script>
+</body>
+</html>

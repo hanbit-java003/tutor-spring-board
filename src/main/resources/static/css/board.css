@@ -1,0 +1,11 @@
+.board-container {
+	padding: 15px;
+}
+
+.board-section {
+	display: none;
+}
+
+.board-buttons {
+	text-align: right;
+}
