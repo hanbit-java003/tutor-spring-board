@@ -37,6 +37,14 @@ public class BoardDAO {
 	public int updateViews(int no) {
 		return sqlSession.update("board.updateViews", no);
 	}
+
+	public int selectNextNo() {
+		return sqlSession.selectOne("board.selectNextNo");
+	}
+	
+	public int insertArticle(BoardVO boardVO) {
+		return sqlSession.insert("board.insertArticle", boardVO);
+	}
 	
 }
 

@@ -211,11 +211,21 @@ $(function() {
 			return;
 		}
 		
-		requestSave(title, writer, contents);
+		requestSave({
+			title: title,
+			writer: writer,
+			contents: contents
+		});
 	});
 	
-	function requestSave(title, writer, contents) {
-		
+	function requestSave(params) {
+		$.ajax({
+			url: '/save',
+			data: params,
+			success: function(result) {
+				
+			}
+		});
 	}
 	
 	$('.board-link').on('click', function() {

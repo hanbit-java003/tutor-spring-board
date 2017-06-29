@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -49,6 +50,24 @@ public class BoardController {
 	@ResponseBody
 	public BoardVO detail(@RequestParam("no") int no) {
 		return boardService.getArticle(no);
+	}
+	
+	@RequestMapping(value="/save", method=RequestMethod.POST)
+	@ResponseBody
+	public Map save(@RequestParam("title") String title,
+			@RequestParam("writer") String writer,
+			@RequestParam("contents") String contents) {
+		
+		BoardVO boardVO = new BoardVO();
+		boardVO.setTitle(title);
+		boardVO.setWriter(writer);
+		boardVO.setContents(contents);
+		
+		boardService.addAritcle(boardVO);
+		
+		Map result = new HashMap();
+		result.put("status", "ok");
+		return result;
 	}
 	
 }

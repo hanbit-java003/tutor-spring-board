@@ -29,6 +29,14 @@ public class BoardService {
 		
 		return boardVO; 
 	}
+
+	public void addAritcle(BoardVO boardVO) {
+		int no = boardDAO.selectNextNo();
+		
+		boardVO.setNo(no);
+		
+		boardDAO.insertArticle(boardVO);
+	}
 	
 }
 
