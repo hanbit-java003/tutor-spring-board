@@ -2,6 +2,7 @@ $(function() {
 	var currentPage = 1;
 	var rowsPerPage = 5;
 	var pagesToShow = 2;
+	var currentNo;
 	
 	function changeSection(section, init, data) {
 		$('.board-section').hide();
@@ -36,6 +37,8 @@ $(function() {
 				no: no
 			},
 			success: function(result) {
+				currentNo = no;
+				
 				setDetail(result);
 			}
 		});
@@ -183,6 +186,25 @@ $(function() {
 		});
 	}
 	
+	function requestSave(params) {
+		$.ajax({
+			url: '/save',
+			method: 'POST',
+			data: params,
+			success: function(result) {
+				completeSave();
+			}
+		});
+	}
+	
+	function completeSave() {
+		$('#edit-title').val('');
+		$('#edit-writer').val('');
+		$('#edit-contents').val('');
+		
+		changeSection('list', false, 1);
+	}
+	
 	$(window).on('popstate', function() {
 		var section = location.hash.replace('#', '');
 		
@@ -220,23 +242,20 @@ $(function() {
 		});
 	});
 	
-	function requestSave(params) {
+	$('#board-delete').on('click', function() {
+		requestDelete();
+	});
+	
+	function requestDelete() {
 		$.ajax({
-			url: '/save',
-			method: 'POST',
-			data: params,
+			url: '/delete',
+			data: {
+				no: currentNo
+			},
 			success: function(result) {
-				completeSave();
+				changeSection('list', false, 1);
 			}
 		});
-	}
-	
-	function completeSave() {
-		$('#edit-title').val('');
-		$('#edit-writer').val('');
-		$('#edit-contents').val('');
-		
-		changeSection('list', false, 1);
 	}
 	
 	$('.board-link').on('click', function() {

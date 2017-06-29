@@ -70,6 +70,17 @@ public class BoardController {
 		return result;
 	}
 	
+	@RequestMapping("/delete")
+	@ResponseBody
+	public Map delete(@RequestParam("no") int no) {
+		
+		boardService.removeArticle(no);
+		
+		Map result = new HashMap();
+		result.put("status", "ok");
+		return result;
+	}
+	
 }
 
 

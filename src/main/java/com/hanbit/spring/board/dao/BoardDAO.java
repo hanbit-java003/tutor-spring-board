@@ -45,6 +45,10 @@ public class BoardDAO {
 	public int insertArticle(BoardVO boardVO) {
 		return sqlSession.insert("board.insertArticle", boardVO);
 	}
+
+	public int deleteArticle(int no) {
+		return sqlSession.delete("board.deleteArticle", no);
+	}
 	
 }
 
