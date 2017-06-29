@@ -49,12 +49,44 @@ $(function() {
 				
 				if (isDetail) {
 					setDetail(result);
+					requestReplies();
 				}
 				else {
 					setEdit(result);
 				}
 			}
 		});
+	}
+	
+	function requestReplies() {
+		$.ajax({
+			url: '/reply/list',
+			data: {
+				no: currentNo
+			},
+			success: function(result) {
+				setReplies(result);
+			}
+		});
+	}
+	
+	function setReplies(replies) {
+		$('.replies').empty();
+		
+		for (var i=0; replies.length; i++) {
+			var reply = replies[i];
+			var writer = reply.writer;
+			var contents = reply.contents.replace(/\n/g, '<br>');
+			
+			var replyHtml = '';
+			replyHtml += '<li>';
+			replyHtml += '<div class="reply-writer">' + writer + '</div>';
+			replyHtml += '<div class="reply-contents">' + contents + '</div>';
+			replyHtml += '<div class="reply-actions">삭제</div>';
+			replyHtml += '</li>';
+			
+			$('.replies').append(replyHtml);
+		}
 	}
 	
 	function setDetail(article) {
@@ -102,7 +134,13 @@ $(function() {
 			
 			var rowHtml = '<tr no="' + row.no + '">';
 			rowHtml += '<td>' + row.no + '</td>';
-			rowHtml += '<td>' + row.title + '</td>';
+			rowHtml += '<td>' + row.title;
+			
+			if (row.replyCount) {
+				rowHtml += ' [' + row.replyCount + ']';
+			}
+			
+			rowHtml += '</td>';
 			rowHtml += '<td>' + row.writer + '</td>';
 			rowHtml += '<td>' + row.views + '</td>';
 			rowHtml += '</tr>';
@@ -227,9 +265,12 @@ $(function() {
 	}
 	
 	function completeSave() {
-		clearEdit();
-		
-		changeSection('list', false, 1);
+		if (currentNo) {
+			changeSection('detail', false, currentNo);
+		}
+		else {
+			changeSection('list', false, 1);
+		}
 	}
 	
 	$(window).on('popstate', function() {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hanbit.spring.board.dao.BoardDAO;
 import com.hanbit.spring.board.vo.BoardVO;
@@ -38,7 +39,10 @@ public class BoardService {
 		boardDAO.insertArticle(boardVO);
 	}
 
+	@Transactional
 	public void removeArticle(int no) {
+		boardDAO.deleteReplies(no);
+		
 		boardDAO.deleteArticle(no);
 	}
 

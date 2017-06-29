@@ -32,8 +32,56 @@
 	min-height: 200px;
 }
 
+.reply-box {
+	position: relative;
+	margin-top: 15px;
+	padding-right: 110px;
+}
 
+#reply-contents {
+	margin-top: 5px;
+}
 
+#reply-save {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 100px;
+	height: 100%;
+}
+
+.replies {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.replies > li {
+	position: relative;
+	margin-top: 10px;
+	padding: 0px 100px 0px 150px;
+}
+
+.reply-writer {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 150px;
+}
+
+.reply-contents {
+	padding: 0px 10px;
+	border-left: solid 4px #aaa;
+	border-right: solid 4px #aaa;
+}
+
+.reply-actions {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 100px;
+	padding-left: 10px;
+}
 
 
 

@@ -68,6 +68,23 @@
 			<button id="board-delete" class="btn btn-danger">삭제</button>
 			<button class="board-link btn btn-default" link="list">목록</button>
 		</div>
+		<div class="reply-box">
+			<input type="text" id="reply-writer" class="form-control" placeholder="댓글 작성자">
+			<textarea id="reply-contents" class="form-control" placeholder="댓글 내용"></textarea>
+			<button id="reply-save" class="btn btn-primary">댓글 쓰기</button>
+		</div>
+		<ul class="replies">
+			<li>
+				<div class="reply-writer">abc</div>
+				<div class="reply-contents">abcd</div>
+				<div class="reply-actions">삭제</div>
+			</li>
+			<li>
+				<div class="reply-writer">abc</div>
+				<div class="reply-contents">abcd</div>
+				<div class="reply-actions">삭제</div>
+			</li>
+		</ul>
 	</div>
 </div>
 
@@ -76,3 +93,11 @@
 <script src="./js/board.js"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
