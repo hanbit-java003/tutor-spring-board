@@ -21,16 +21,24 @@ $(function() {
 			requestList(page);
 		}
 		else if (section === 'edit') {
-			
+			if (data) {
+				var no = data;
+				
+				requestDetail(no);
+			}
+			else {
+				currentNo = null;
+				clearEdit();
+			}
 		}
 		else if (section === 'detail') {
 			var no = data;
 			
-			requestDetail(no);
+			requestDetail(no, true);
 		}		
 	}
 	
-	function requestDetail(no) {
+	function requestDetail(no, isDetail) {
 		$.ajax({
 			url: '/detail',
 			data: {
@@ -39,7 +47,12 @@ $(function() {
 			success: function(result) {
 				currentNo = no;
 				
-				setDetail(result);
+				if (isDetail) {
+					setDetail(result);
+				}
+				else {
+					setEdit(result);
+				}
 			}
 		});
 	}
@@ -54,6 +67,16 @@ $(function() {
 		$('#detail-title').html(title);
 		$('#detail-writer').html(writer);
 		$('#detail-contents').html(contents);
+	}
+	
+	function setEdit(article) {
+		var title = article.title;
+		var writer = article.writer;
+		var contents = article.contents;
+		
+		$('#edit-title').val(title);
+		$('#edit-writer').val(writer);
+		$('#edit-contents').val(contents);
 	}
 	
 	function requestList(page) {
@@ -197,10 +220,14 @@ $(function() {
 		});
 	}
 	
-	function completeSave() {
+	function clearEdit() {
 		$('#edit-title').val('');
 		$('#edit-writer').val('');
 		$('#edit-contents').val('');
+	}
+	
+	function completeSave() {
+		clearEdit();
 		
 		changeSection('list', false, 1);
 	}
@@ -236,6 +263,7 @@ $(function() {
 		}
 		
 		requestSave({
+			no: currentNo,
 			title: title,
 			writer: writer,
 			contents: contents
@@ -257,6 +285,10 @@ $(function() {
 			}
 		});
 	}
+	
+	$('#board-edit').on('click', function() {
+		changeSection('edit', false, currentNo);
+	});
 	
 	$('.board-link').on('click', function() {
 		var link = $(this).attr('link');

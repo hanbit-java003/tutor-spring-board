@@ -41,6 +41,10 @@ public class BoardService {
 	public void removeArticle(int no) {
 		boardDAO.deleteArticle(no);
 	}
+
+	public void editArticle(BoardVO boardVO) {
+		boardDAO.updateArticle(boardVO);		
+	}
 	
 }
 

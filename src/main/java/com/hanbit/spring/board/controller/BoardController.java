@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,14 +58,23 @@ public class BoardController {
 	@ResponseBody
 	public Map save(@RequestParam("title") String title,
 			@RequestParam("writer") String writer,
-			@RequestParam("contents") String contents) {
+			@RequestParam("contents") String contents,
+			HttpServletRequest request) {
 		
 		BoardVO boardVO = new BoardVO();
 		boardVO.setTitle(title);
 		boardVO.setWriter(writer);
 		boardVO.setContents(contents);
 		
-		boardService.addAritcle(boardVO);
+		if (StringUtils.isEmpty(request.getParameter("no"))) {
+			boardService.addAritcle(boardVO);
+		}
+		else {
+			int no = Integer.parseInt(request.getParameter("no"));
+			boardVO.setNo(no);
+			
+			boardService.editArticle(boardVO);
+		}
 		
 		Map result = new HashMap();
 		result.put("status", "ok");
