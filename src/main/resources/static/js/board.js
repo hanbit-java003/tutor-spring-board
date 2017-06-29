@@ -15,7 +15,9 @@ $(function() {
 		}
 		
 		if (section === 'list') {
-			requestList(currentPage);
+			var page = data ? data : currentPage;
+			
+			requestList(page);
 		}
 		else if (section === 'edit') {
 			
@@ -44,7 +46,7 @@ $(function() {
 		var writer = article.writer;
 		var contents = article.contents;
 		
-		contents = contents.replace(/\\n/g, '<br>');
+		contents = contents.replace(/\n/g, '<br>');
 		
 		$('#detail-title').html(title);
 		$('#detail-writer').html(writer);
@@ -221,11 +223,20 @@ $(function() {
 	function requestSave(params) {
 		$.ajax({
 			url: '/save',
+			method: 'POST',
 			data: params,
 			success: function(result) {
-				
+				completeSave();
 			}
 		});
+	}
+	
+	function completeSave() {
+		$('#edit-title').val('');
+		$('#edit-writer').val('');
+		$('#edit-contents').val('');
+		
+		changeSection('list', false, 1);
 	}
 	
 	$('.board-link').on('click', function() {
