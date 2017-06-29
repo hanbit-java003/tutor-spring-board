@@ -187,6 +187,37 @@ $(function() {
 		changeSection(section);
 	});
 	
+	$('#board-save').on('click', function() {
+		var title = $('#edit-title').val().trim();
+		var writer = $('#edit-writer').val().trim();
+		var contents = $('#edit-contents').val().trim();
+		
+		if (!title) {
+			alert('제목을 입력하세요.');
+			$('#edit-title').val('');
+			$('#edit-title').focus();
+			return;
+		}
+		else if (!writer) {
+			alert('작성자를 입력하세요.');
+			$('#edit-writer').val('');
+			$('#edit-writer').focus();
+			return;
+		}
+		else if (!contents) {
+			alert('내용을 입력하세요.');
+			$('#edit-contents').val('');
+			$('#edit-contents').focus();
+			return;
+		}
+		
+		requestSave(title, writer, contents);
+	});
+	
+	function requestSave(title, writer, contents) {
+		
+	}
+	
 	$('.board-link').on('click', function() {
 		var link = $(this).attr('link');
 		

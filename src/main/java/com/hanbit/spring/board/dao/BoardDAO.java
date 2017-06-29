@@ -34,6 +34,10 @@ public class BoardDAO {
 		return sqlSession.selectOne("board.selectArticle", no);
 	}
 	
+	public int updateViews(int no) {
+		return sqlSession.update("board.updateViews", no);
+	}
+	
 }
 
 

@@ -32,8 +32,20 @@
 	</div>
 	<!-- 글쓰기 -->
 	<div class="board-edit board-section">
-		수정
+		<div class="form-group">
+			<label>제목</label>
+			<input id="edit-title" type="text" class="form-control" placeholder="제목">
+		</div>
+		<div class="form-group">
+			<label>작성자</label>
+			<input id="edit-writer" type="text" class="form-control" placeholder="작성자">
+		</div>
+		<div class="form-group">
+			<label>내용</label>
+			<textarea id="edit-contents" class="board-textarea form-control" placeholder="내용을 입력하세요."></textarea>
+		</div>
 		<div class="board-buttons">
+			<button id="board-save" class="btn btn-success">저장</button>
 			<button class="board-link btn btn-default" link="list">목록</button>
 		</div>
 	</div>

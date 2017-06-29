@@ -23,7 +23,11 @@ public class BoardService {
 	}
 	
 	public BoardVO getArticle(int no) {
-		return boardDAO.selectArticle(no);
+		BoardVO boardVO = boardDAO.selectArticle(no);
+		
+		boardDAO.updateViews(no);
+		
+		return boardVO; 
 	}
 	
 }
