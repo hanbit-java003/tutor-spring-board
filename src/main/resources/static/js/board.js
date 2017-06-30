@@ -74,8 +74,9 @@ $(function() {
 	function setReplies(replies) {
 		$('.replies').empty();
 		
-		for (var i=0; replies.length; i++) {
+		for (var i=0; i<replies.length; i++) {
 			var reply = replies[i];
+			var rno = reply.rno;
 			var writer = reply.writer;
 			var contents = reply.contents.replace(/\n/g, '<br>');
 			
@@ -83,11 +84,37 @@ $(function() {
 			replyHtml += '<li>';
 			replyHtml += '<div class="reply-writer">' + writer + '</div>';
 			replyHtml += '<div class="reply-contents">' + contents + '</div>';
-			replyHtml += '<div class="reply-actions">삭제</div>';
+			replyHtml += '<div class="reply-actions">';
+			replyHtml += '<button rno="' + rno + '" class="reply-delete btn btn-danger btn-xs">삭제</button>';
+			replyHtml += '</div>';
 			replyHtml += '</li>';
 			
 			$('.replies').append(replyHtml);
 		}
+		
+		handleReplyEvent();
+	}
+	
+	function handleReplyEvent() {
+		$('.reply-delete').on('click', function() {
+			var no = currentNo;
+			var rno = $(this).attr('rno');
+			
+			requestReplyDelete(no, rno);
+		});
+	}
+	
+	function requestReplyDelete(no, rno) {
+		$.ajax({
+			url: '/reply/delete',
+			data: {
+				no: no,
+				rno: rno
+			},
+			success: function(result) {
+				requestReplies();
+			}
+		});
 	}
 	
 	function setDetail(article) {

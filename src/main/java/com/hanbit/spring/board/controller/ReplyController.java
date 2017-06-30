@@ -43,7 +43,33 @@ public class ReplyController {
 		return result;
 	}
 	
+	@RequestMapping("/delete")
+	public Map delete(@RequestParam("no") int no,
+			@RequestParam("rno") int rno) {
+		
+		ReplyVO replyVO = new ReplyVO();
+		replyVO.setNo(no);
+		replyVO.setRno(rno);
+		
+		replyService.removeReply(replyVO);
+		
+		Map result = new HashMap();
+		result.put("status", "ok");
+		
+		return result;
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -26,7 +26,16 @@ public class ReplyDAO {
 		return sqlSession.insert("reply.insertReply", replyVO);
 	}
 	
+	public int deleteReply(ReplyVO replyVO) {
+		return sqlSession.delete("reply.deleteReply", replyVO);
+	}
+	
 }
+
+
+
+
+
 
 
 

@@ -27,7 +27,23 @@ public class ReplyService {
 		replyDAO.insertReply(replyVO);
 	}
 	
+	public void removeReply(ReplyVO replyVO) {
+		replyDAO.deleteReply(replyVO);
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
