@@ -34,6 +34,7 @@ $(function() {
 		else if (section === 'detail') {
 			var no = data;
 			
+			clearReplyInput();
 			requestDetail(no, true);
 		}		
 	}
@@ -330,6 +331,48 @@ $(function() {
 	$('#board-edit').on('click', function() {
 		changeSection('edit', false, currentNo);
 	});
+	
+	$('#reply-save').on('click', function() {
+		var writer = $('#reply-writer').val().trim();
+		var contents = $('#reply-contents').val().trim();
+		
+		if (!writer) {
+			alert('댓글 작성자를 입력하세요.');
+			$('#reply-writer').val('');
+			$('#reply-writer').focus();
+			return;
+		}
+		else if (!contents) {
+			alert('댓글 내용을 입력하세요.');
+			$('#reply-contents').val('');
+			$('#reply-contents').focus();
+			return;
+		}
+		
+		clearReplyInput();
+		
+		requestReplySave(writer, contents);
+	});
+	
+	function clearReplyInput() {
+		$('#reply-writer').val('');
+		$('#reply-contents').val('');
+	}
+	
+	function requestReplySave(writer, contents) {
+		$.ajax({
+			url: '/reply/save',
+			method: 'POST',
+			data: {
+				writer: writer,
+				contents: contents,
+				no: currentNo
+			},
+			success: function(result) {
+				requestReplies();
+			}
+		});
+	}
 	
 	$('.board-link').on('click', function() {
 		var link = $(this).attr('link');
