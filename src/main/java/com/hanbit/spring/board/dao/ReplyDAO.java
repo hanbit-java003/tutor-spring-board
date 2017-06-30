@@ -18,4 +18,20 @@ public class ReplyDAO {
 		return sqlSession.selectList("reply.selectReplies", no);
 	}
 	
+	public int selectNextRno(int no) {
+		return sqlSession.selectOne("reply.selectNextRno", no);
+	}
+	
+	public int insertReply(ReplyVO replyVO) {
+		return sqlSession.insert("reply.insertReply", replyVO);
+	}
+	
 }
+
+
+
+
+
+
+
+

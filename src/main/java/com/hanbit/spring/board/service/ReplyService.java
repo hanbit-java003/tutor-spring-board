@@ -18,4 +18,18 @@ public class ReplyService {
 		return replyDAO.selectReplies(no);
 	}
 	
+	public void addReply(ReplyVO replyVO) {
+		int no = replyVO.getNo();
+		
+		int rno = replyDAO.selectNextRno(no);
+		replyVO.setRno(rno);
+		
+		replyDAO.insertReply(replyVO);
+	}
+	
 }
+
+
+
+
+
